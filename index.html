@@ -1,677 +1,255 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reporte de Asistencia Laboral - Marzo 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0B0E1A;
-            --surface: #111624;
-            --surface2: #171D30;
-            --border: #1F2840;
-            --teal: #00D4C8;
-            --amber: #F5A623;
-            --red: #FF4757;
-            --green: #2ECC71;
-            --purple: #A855F7;
-            --white: #FFFFFF;
-            --gray: #9CA3AF;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--white);
-            line-height: 1.6;
-        }
-
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--gray);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--teal);
-        }
-
-        .period-badge {
-            background: var(--teal);
-            color: var(--bg);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            margin-top: 80px;
-            padding: 3rem 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
-        }
-
-        .hero h1 {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--teal), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-period {
-            font-size: 1.2rem;
-            color: var(--gray);
-            margin-bottom: 2rem;
-        }
-
-        .pills {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .pill {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            padding: 0.7rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 500;
-        }
-
-        /* KPI Cards */
-        .kpis {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .kpi-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .kpi-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 212, 200, 0.1);
-        }
-
-        .kpi-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .kpi-number {
-            font-family: 'Syne', sans-serif;
-            font-weight: 800;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .kpi-label {
-            color: var(--gray);
-            font-weight: 500;
-        }
-
-        .ausencias { --color: var(--red); }
-        .sin-salida { --color: var(--amber); }
-        .sin-planificar { --color: var(--purple); }
-        .atrasos { --color: var(--teal); }
-
-        .kpi-card .kpi-icon { background: var(--color); }
-        .kpi-card .kpi-number { color: var(--color); }
-
-        /* Alert Banners */
-        .alerts {
-            padding: 0 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .alert {
-            background: linear-gradient(90deg, rgba(255, 71, 87, 0.1), rgba(255, 71, 87, 0.05));
-            border-left: 4px solid var(--red);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .alert-title {
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            color: var(--red);
-            margin-bottom: 0.5rem;
-        }
-
-        /* Leaders Table */
-        .leaders-section {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .leaders-table {
-            background: var(--surface);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-
-        .table-header {
-            background: var(--surface2);
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 1rem;
-            padding: 1.5rem;
-            font-weight: 600;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .table-row {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
-            gap: 1rem;
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            transition: background 0.3s ease;
-        }
-
-        .table-row:hover {
-            background: var(--surface2);
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-critico { background: var(--red); color: white; }
-        .status-alerta { background: var(--amber); color: var(--bg); }
-        .status-normal { background: var(--green); color: white; }
-
-        /* Progress Bars */
-        .progress-section {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .progress-item {
-            margin-bottom: 2rem;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-bar {
-            height: 12px;
-            background: var(--surface2);
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--red), var(--amber));
-            transition: width 2s ease;
-        }
-
-        /* Cards Grid */
-        .cards-section {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .info-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .info-card:hover {
-            transform: translateY(-3px);
-        }
-
-        .card-title {
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--teal);
-        }
-
-        .card-content {
-            color: var(--gray);
-            line-height: 1.8;
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid var(--border);
-            color: var(--gray);
-            margin-top: 3rem;
-        }
-
-        /* Animations */
-        .counter {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .counter.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .table-header, .table-row { grid-template-columns: 1fr; }
-            .nav { padding: 1rem; }
-            .nav-links { display: none; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reporte Asistencia - Quick Help SAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0B0E1A;color:#E2E8F0;font-family:'DM Sans',sans-serif;min-height:100vh}
+nav{position:sticky;top:0;z-index:100;background:rgba(11,14,26,0.95);backdrop-filter:blur(12px);border-bottom:1px solid #1F2840;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+nav a{color:#64748B;text-decoration:none;font-size:13px;font-weight:500;margin-left:16px;transition:color 0.2s}
+nav a:hover{color:#00D4C8}
+.hero{text-align:center;padding:48px 20px 32px}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(24px,4vw,36px);font-weight:800;background:linear-gradient(135deg,#00D4C8,#A855F7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+.hero .period{display:inline-block;background:#111624;border:1px solid #1F2840;border-radius:20px;padding:6px 18px;font-size:13px;color:#64748B;margin-top:8px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:1100px;margin:0 auto 32px;padding:0 20px}
+.kpi{background:#111624;border:1px solid #1F2840;border-radius:12px;padding:24px;text-align:center;transition:transform 0.2s,border-color 0.2s}
+.kpi:hover{transform:translateY(-4px);border-color:#00D4C8}
+.kpi .val{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;line-height:1}
+.kpi .lbl{font-size:12px;color:#64748B;margin-top:6px;font-weight:500;text-transform:uppercase;letter-spacing:0.5px}
+.section{max-width:1100px;margin:0 auto 32px;padding:0 20px}
+.section h2{font-family:'Syne',sans-serif;font-size:22px;margin-bottom:16px}
+table{width:100%;border-collapse:collapse;background:#111624;border-radius:12px;overflow:hidden;border:1px solid #1F2840}
+th{background:#171D30;color:#00D4C8;padding:12px 16px;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;text-align:left}
+td{padding:10px 16px;border-top:1px solid #1F2840;font-size:13px}
+tr:hover td{background:#171D30}
+footer{text-align:center;padding:32px 20px;color:#64748B;font-size:12px;border-top:1px solid #1F2840;margin-top:48px}
+@media(max-width:600px){.kpis{grid-template-columns:1fr 1fr}.kpi .val{font-size:28px}}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-links">
-            <a href="#overview">Resumen</a>
-            <a href="#leaders">Líderes</a>
-            <a href="#insights">Análisis</a>
-            <a href="#actions">Acciones</a>
-        </div>
-        <div class="period-badge">1-10 Marzo 2026</div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="overview">
-        <h1>Reporte de Asistencia Laboral</h1>
-        <div class="hero-period">Período: Dom 01-03-2026 hasta Mar 10-03-2026</div>
-        <div class="pills">
-            <div class="pill">📊 100 Empleados</div>
-            <div class="pill">👥 10 Líderes</div>
-            <div class="pill">📋 1,000 Registros</div>
-        </div>
-    </section>
+<nav>
+<span style="font-family:'Syne',sans-serif;font-weight:800;color:#00D4C8;font-size:16px">Quick Help SAS</span>
+<div>
+<a href="#kpis">KPIs</a>
+<a href="#alertas">Alertas</a>
+<a href="#lideres">Lideres</a>
+<a href="#ranking">Ranking</a>
+</div>
+</nav>
 
-    <!-- KPI Cards -->
-    <section class="kpis">
-        <div class="kpi-card ausencias">
-            <div class="kpi-icon">🚫</div>
-            <div class="kpi-number counter" data-target="549">0</div>
-            <div class="kpi-label">Ausencias Totales</div>
-        </div>
-        <div class="kpi-card sin-salida">
-            <div class="kpi-icon">⚠️</div>
-            <div class="kpi-number counter" data-target="62">0</div>
-            <div class="kpi-label">Sin Registro de Salida</div>
-        </div>
-        <div class="kpi-card atrasos">
-            <div class="kpi-icon">⏰</div>
-            <div class="kpi-number counter" data-target="33">0</div>
-            <div class="kpi-label">Atrasos (excl. excluidos)</div>
-        </div>
-        <div class="kpi-card sin-planificar">
-            <div class="kpi-icon">📅</div>
-            <div class="kpi-number counter" data-target="0">0</div>
-            <div class="kpi-label">Sin Planificar</div>
-        </div>
-    </section>
+<div class="hero">
+<h1>Reporte de Asistencia</h1>
+<p style="color:#64748B;font-size:14px">99 empleados &middot; 10 lideres &middot; 990 registros</p>
+<div class="period">Dom 01-03-2026 &rarr; Mar 10-03-2026</div>
+</div>
 
-    <!-- Alert Banners -->
-    <section class="alerts">
-        <div class="alert">
-            <div class="alert-title">🚨 Situación Crítica Detectada</div>
-            <div>DANIEL MACHADO presenta 244 ausencias (56.7% del equipo) - Requiere atención inmediata</div>
-        </div>
-        <div class="alert">
-            <div class="alert-title">⚠️ Alta Incidencia de Ausencias</div>
-            <div>OSCAR DÍAZ con 78 ausencias (60% del equipo) y múltiples líderes superan el 50% de ausencias</div>
-        </div>
-    </section>
+<div class="kpis" id="kpis">
+<div class="kpi">
+<div class="val" style="color:#FF4757">35</div>
+<div class="lbl">Ausencias</div>
+</div>
+<div class="kpi">
+<div class="val" style="color:#F5A623">24</div>
+<div class="lbl">Sin salida</div>
+</div>
+<div class="kpi">
+<div class="val" style="color:#A855F7">32</div>
+<div class="lbl">Atrasos (filtrado)</div>
+</div>
+<div class="kpi">
+<div class="val" style="color:#00D4C8">597</div>
+<div class="lbl">Sin planificar</div>
+</div>
+</div>
 
-    <!-- Leaders Table -->
-    <section class="leaders-section" id="leaders">
-        <h2 class="section-title">Análisis por Líder de Equipo</h2>
-        <div class="leaders-table">
-            <div class="table-header">
-                <div>Líder</div>
-                <div>Empleados</div>
-                <div>Ausencias</div>
-                <div>Sin Salida</div>
-                <div>Atrasos</div>
-                <div>Estado</div>
-                <div>%Ausencias</div>
-            </div>
-            <div class="table-row">
-                <div><strong>DANIEL MACHADO</strong></div>
-                <div>43</div>
-                <div>244</div>
-                <div>20</div>
-                <div>0</div>
-                <div><span class="status-badge status-critico">CRÍTICO</span></div>
-                <div>56.7%</div>
-            </div>
-            <div class="table-row">
-                <div><strong>OSCAR DÍAZ</strong></div>
-                <div>13</div>
-                <div>78</div>
-                <div>0</div>
-                <div>0</div>
-                <div><span class="status-badge status-critico">CRÍTICO</span></div>
-                <div>60.0%</div>
-            </div>
-            <div class="table-row">
-                <div><strong>STIVEN MORENO</strong></div>
-                <div>10</div>
-                <div>60</div>
-                <div>0</div>
-                <div>0</div>
-                <div><span class="status-badge status-critico">CRÍTICO</span></div>
-                <div>60.0%</div>
-            </div>
-            <div class="table-row">
-                <div><strong>JAMY OSPINA</strong></div>
-                <div>8</div>
-                <div>48</div>
-                <div>0</div>
-                <div>0</div>
-                <div><span class="status-badge status-critico">CRÍTICO</span></div>
-                <div>60.0%</div>
-            </div>
-            <div class="table-row">
-                <div><strong>NIKOL ROSAS</strong></div>
-                <div>6</div>
-                <div>36</div>
-                <div>0</div>
-                <div>0</div>
-                <div><span class="status-badge status-critico">CRÍTICO</span></div>
-                <div>60.0%</div>
-            </div>
-            <div class="table-row">
-                <div><strong>ERICK DELGADO</strong></div>
-                <div>6</div>
-                <div>31</div>
-                <div>7</div>
-                <div>0</div>
-                <div><span class="status-badge status-critico">CRÍTICO</span></div>
-                <div>51.7%</div>
-            </div>
-            <div class="table-row">
-                <div><strong>BRAYAN RONCANCIO</strong></div>
-                <div>5</div>
-                <div>30</div>
-                <div>0</div>
-                <div>0</div>
-                <div><span class="status-badge status-critico">CRÍTICO</span></div>
-                <div>60.0%</div>
-            </div>
-            <div class="table-row">
-                <div><strong>CAMILA CASTAÑEDA</strong></div>
-                <div>6</div>
-                <div>10</div>
-                <div>28</div>
-                <div>29</div>
-                <div><span class="status-badge status-critico">CRÍTICO</span></div>
-                <div>16.7%</div>
-            </div>
-            <div class="table-row">
-                <div><strong>MELVA DOMINGUEZ</strong></div>
-                <div>1</div>
-                <div>6</div>
-                <div>0</div>
-                <div>0</div>
-                <div><span class="status-badge status-critico">CRÍTICO</span></div>
-                <div>60.0%</div>
-            </div>
-            <div class="table-row">
-                <div><strong>RICARDO CUBILLOS</strong></div>
-                <div>2</div>
-                <div>6</div>
-                <div>7</div>
-                <div>4</div>
-                <div><span class="status-badge status-alerta">ALERTA</span></div>
-                <div>30.0%</div>
-            </div>
-        </div>
-    </section>
+<section class="section" id="alertas">
+<h2 style="color:#FF4757">Alertas Criticas</h2>
+<div style="background:rgba(255,71,87,0.1);border:1px solid rgba(255,71,87,0.3);border-radius:8px;padding:12px 16px;margin-bottom:8px">
+<span style="color:#FF4757;font-weight:700">CRITICO</span> &mdash; BRAYAN RONCANCIO: 14 ausencias, 0 sin salida (5 empleados)
+</div><div style="background:rgba(255,71,87,0.1);border:1px solid rgba(255,71,87,0.3);border-radius:8px;padding:12px 16px;margin-bottom:8px">
+<span style="color:#FF4757;font-weight:700">CRITICO</span> &mdash; CAMILA CASTAÑEDA: 10 ausencias, 14 sin salida (6 empleados)
+</div><div style="background:rgba(255,71,87,0.1);border:1px solid rgba(255,71,87,0.3);border-radius:8px;padding:12px 16px;margin-bottom:8px">
+<span style="color:#FF4757;font-weight:700">CRITICO</span> &mdash; JAMY OSPINA: 7 ausencias, 0 sin salida (7 empleados)
+</div>
+</section>
 
-    <!-- Progress Bars -->
-    <section class="progress-section">
-        <h2 class="section-title">Top Ausencias por Líder</h2>
-        <div class="progress-item">
-            <div class="progress-header">
-                <span><strong>DANIEL MACHADO</strong></span>
-                <span>244 ausencias (44.4%)</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%"></div>
-            </div>
-        </div>
-        <div class="progress-item">
-            <div class="progress-header">
-                <span><strong>OSCAR DÍAZ</strong></span>
-                <span>78 ausencias (14.2%)</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 32%"></div>
-            </div>
-        </div>
-        <div class="progress-item">
-            <div class="progress-header">
-                <span><strong>STIVEN MORENO</strong></span>
-                <span>60 ausencias (10.9%)</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 25%"></div>
-            </div>
-        </div>
-    </section>
+<section class="section" id="lideres">
+<h2 style="color:#00D4C8">Detalle por Lider</h2>
+<div style="overflow-x:auto">
+<table>
+<thead><tr>
+<th>Lider</th><th style="text-align:center">Empleados</th><th style="text-align:center">Ausencias</th>
+<th style="text-align:center">Sin salida</th><th style="text-align:center">Sin planif.</th>
+<th style="text-align:center">Atrasos</th><th style="text-align:center">HE (hrs)</th><th style="text-align:center">Estado</th>
+</tr></thead>
+<tbody><tr>
+<td style="font-weight:600">BRAYAN RONCANCIO</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">14</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">21</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0.0</td>
+<td style="text-align:center"><span style="background:#FF4757;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">Critico</span></td>
+</tr><tr>
+<td style="font-weight:600">CAMILA CASTAÑEDA</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">14</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">29</td>
+<td style="text-align:center">0.0</td>
+<td style="text-align:center"><span style="background:#FF4757;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">Critico</span></td>
+</tr><tr>
+<td style="font-weight:600">JAMY OSPINA</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">42</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0.0</td>
+<td style="text-align:center"><span style="background:#FF4757;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">Critico</span></td>
+</tr><tr>
+<td style="font-weight:600">DANIEL MACHADO</td>
+<td style="text-align:center">43</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">282</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0.0</td>
+<td style="text-align:center"><span style="background:#2ECC71;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">Normal</span></td>
+</tr><tr>
+<td style="font-weight:600">ERICK DELGADO</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">35</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0.0</td>
+<td style="text-align:center"><span style="background:#F5A623;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">Alerta</span></td>
+</tr><tr>
+<td style="font-weight:600">RICARDO CUBILLOS</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">0.0</td>
+<td style="text-align:center"><span style="background:#FF4757;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">Critico</span></td>
+</tr><tr>
+<td style="font-weight:600">NIKOL ROSAS</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">42</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0.0</td>
+<td style="text-align:center"><span style="background:#2ECC71;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">Normal</span></td>
+</tr><tr>
+<td style="font-weight:600">STIVEN MORENO</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">70</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0.0</td>
+<td style="text-align:center"><span style="background:#2ECC71;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">Normal</span></td>
+</tr><tr>
+<td style="font-weight:600">OSCAR DÍAZ</td>
+<td style="text-align:center">13</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">91</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0.0</td>
+<td style="text-align:center"><span style="background:#2ECC71;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">Normal</span></td>
+</tr><tr>
+<td style="font-weight:600">MELVA DOMINGUEZ</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0.0</td>
+<td style="text-align:center"><span style="background:#2ECC71;color:#fff;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">Normal</span></td>
+</tr></tbody>
+</table>
+</div>
+</section>
 
-    <!-- Cards Section -->
-    <section class="cards-section" id="insights">
-        <h2 class="section-title">Inconsistencias Detectadas</h2>
-        <div class="cards-grid">
-            <div class="info-card">
-                <div class="card-title">🔍 Ausencias Masivas</div>
-                <div class="card-content">
-                    Se detecta un patrón anómalo de ausencias que afecta al 54.9% de todos los registros. 
-                    Esto sugiere un problema sistémico que requiere investigación inmediata sobre las 
-                    causas raíz de esta alta incidencia.
-                </div>
-            </div>
-            <div class="info-card">
-                <div class="card-title">⚠️ Registros de Salida</div>
-                <div class="card-content">
-                    62 casos de empleados sin registro de salida, concentrados principalmente en los 
-                    equipos de CAMILA CASTAÑEDA y DANIEL MACHADO. Esto indica posibles problemas 
-                    con el sistema de control de acceso o falta de adherencia a procesos.
-                </div>
-            </div>
-            <div class="info-card">
-                <div class="card-title">📊 Distribución Irregular</div>
-                <div class="card-content">
-                    La distribución de ausencias no es uniforme entre equipos. Algunos líderes muestran 
-                    tasas del 60% mientras otros mantienen mejor control, sugiriendo diferencias en 
-                    gestión de equipos o condiciones específicas por área.
-                </div>
-            </div>
-        </div>
+<section class="section" id="ranking">
+<h2 style="color:#F5A623">Top Ausencias</h2>
+<div style="background:#111624;border:1px solid #1F2840;border-radius:12px;padding:20px">
+<div style="margin-bottom:10px">
+<div style="display:flex;justify-content:space-between;margin-bottom:4px">
+<span style="font-size:13px;font-weight:600">BRAYAN RONCANCIO</span>
+<span style="color:#FF4757;font-weight:700">14</span>
+</div>
+<div style="background:#1F2840;border-radius:6px;height:8px;overflow:hidden">
+<div style="background:#FF4757;width:100%;height:100%;border-radius:6px;transition:width 1s ease"></div>
+</div>
+</div><div style="margin-bottom:10px">
+<div style="display:flex;justify-content:space-between;margin-bottom:4px">
+<span style="font-size:13px;font-weight:600">CAMILA CASTAÑEDA</span>
+<span style="color:#FF4757;font-weight:700">10</span>
+</div>
+<div style="background:#1F2840;border-radius:6px;height:8px;overflow:hidden">
+<div style="background:#FF4757;width:71%;height:100%;border-radius:6px;transition:width 1s ease"></div>
+</div>
+</div><div style="margin-bottom:10px">
+<div style="display:flex;justify-content:space-between;margin-bottom:4px">
+<span style="font-size:13px;font-weight:600">JAMY OSPINA</span>
+<span style="color:#FF4757;font-weight:700">7</span>
+</div>
+<div style="background:#1F2840;border-radius:6px;height:8px;overflow:hidden">
+<div style="background:#FF4757;width:50%;height:100%;border-radius:6px;transition:width 1s ease"></div>
+</div>
+</div><div style="margin-bottom:10px">
+<div style="display:flex;justify-content:space-between;margin-bottom:4px">
+<span style="font-size:13px;font-weight:600">DANIEL MACHADO</span>
+<span style="color:#2ECC71;font-weight:700">2</span>
+</div>
+<div style="background:#1F2840;border-radius:6px;height:8px;overflow:hidden">
+<div style="background:#2ECC71;width:14%;height:100%;border-radius:6px;transition:width 1s ease"></div>
+</div>
+</div><div style="margin-bottom:10px">
+<div style="display:flex;justify-content:space-between;margin-bottom:4px">
+<span style="font-size:13px;font-weight:600">ERICK DELGADO</span>
+<span style="color:#F5A623;font-weight:700">1</span>
+</div>
+<div style="background:#1F2840;border-radius:6px;height:8px;overflow:hidden">
+<div style="background:#F5A623;width:7%;height:100%;border-radius:6px;transition:width 1s ease"></div>
+</div>
+</div>
+</div>
+</section>
 
-        <h2 class="section-title">Acciones Recomendadas</h2>
-        <div class="cards-grid">
-            <div class="info-card">
-                <div class="card-title">🎯 Intervención Inmediata</div>
-                <div class="card-content">
-                    Reunión urgente con DANIEL MACHADO, OSCAR DÍAZ y STIVEN MORENO para entender 
-                    las causas de las altas tasas de ausencia. Implementar plan de contingencia 
-                    para asegurar continuidad operativa en sus equipos.
-                </div>
-            </div>
-            <div class="info-card">
-                <div class="card-title">🔧 Mejoras del Sistema</div>
-                <div class="card-content">
-                    Revisar y mejorar el sistema de registro de entrada/salida. Implementar 
-                    recordatorios automáticos y validaciones para reducir los casos de registros 
-                    incompletos. Capacitar a supervisores en el uso correcto.
-                </div>
-            </div>
-            <div class="info-card">
-                <div class="card-title">📈 Monitoreo Continuo</div>
-                <div class="card-content">
-                    Establecer alertas automáticas cuando las ausencias superen el 15% por equipo. 
-                    Implementar reportes semanales y seguimiento personalizado con líderes que 
-                    muestren tendencias preocupantes de ausentismo.
-                </div>
-            </div>
-        </div>
-    </section>
+<section style="max-width:1100px;margin:32px auto;padding:0 20px">
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;color:#A855F7;margin-bottom:16px">Analisis IA</h2>
+<div style="background:#111624;border:1px solid #1F2840;border-radius:12px;padding:24px;color:#E2E8F0;font-size:14px">
+<p style='margin:8px 0;line-height:1.6'>Los datos revelan una crisis severa de gestión de asistencia con 597 registros sin planificar, representando el 87% del total de incidencias. BRAYAN RONCANCIO emerge como el caso más crítico con 14 ausencias distribuidas en solo 5 empresas, sugiriendo un patrón de rotación problemática, seguido por CAMILA CASTAÑEDA con alta frecuencia de ausencias pero mayor dispersión empresarial.</p><p style='margin:8px 0;line-height:1.6'>La alta proporción de registros sin planificación (597 vs 35 ausencias formales) indica un colapso en los procesos de solicitud y autorización de permisos. Los 24 casos sin salida registrada evidencian fallas en el control de acceso y seguimiento de personal en tiempo real.</p><p style='margin:8px 0;line-height:1.6'>Se requiere intervención inmediata con BRAYAN RONCANCIO para evaluar causas de sus ausencias recurrentes y implementar un plan de retención. Es crítico establecer protocolos obligatorios de planificación previa y fortalecer los sistemas de registro de entrada/salida para recuperar el control operativo de la asistencia laboral.</p>
+</div>
+</section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>Reporte generado el <strong>10 de Marzo de 2026</strong> | Sistema de Gestión de Asistencia v2.0</p>
-    </footer>
+<footer>
+Generado el 10/03/2026 15:27 &middot; Quick Help SAS &middot; Agente de Asistencia v1
+</footer>
 
-    <script>
-        // Counter Animation
-        const observerOptions = {
-            threshold: 0.5,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    animateCounter(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        function animateCounter(element) {
-            const target = parseInt(element.dataset.target);
-            const duration = 2000;
-            const start = performance.now();
-
-            function updateCounter(currentTime) {
-                const elapsed = currentTime - start;
-                const progress = Math.min(elapsed / duration, 1);
-                const current = Math.floor(progress * target);
-                
-                element.textContent = current.toLocaleString();
-                
-                if (progress < 1) {
-                    requestAnimationFrame(updateCounter);
-                }
-            }
-            
-            requestAnimationFrame(updateCounter);
-        }
-
-        // Initialize observers
-        document.querySelectorAll('.counter').forEach(counter => {
-            observer.observe(counter);
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
-
-        // Progress bar animation
-        const progressObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const fill = entry.target.querySelector('.progress-fill');
-                    const width = fill.style.width;
-                    fill.style.width = '0%';
-                    setTimeout(() => {
-                        fill.style.width = width;
-                    }, 100);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        document.querySelectorAll('.progress-item').forEach(item => {
-            progressObserver.observe(item);
-        });
-    </script>
+<script>
+// Animacion contadores
+document.querySelectorAll('.kpi .val').forEach(el=>{
+const target=parseInt(el.textContent);if(isNaN(target))return;
+el.textContent='0';
+const obs=new IntersectionObserver(entries=>{
+if(entries[0].isIntersecting){
+let c=0;const step=Math.max(1,Math.floor(target/30));
+const iv=setInterval(()=>{c+=step;if(c>=target){c=target;clearInterval(iv)}el.textContent=c},30);
+obs.disconnect()}
+});obs.observe(el)});
+</script>
 </body>
 </html>
